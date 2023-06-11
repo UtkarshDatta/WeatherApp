@@ -1,7 +1,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
+const apkiKey = "7615e28db9ac3f1486984e9e68c0f670";
+const[data,setData] = useState({});
+
+const getdetails = (cityName)=> {
+  if(!cityName) return
+  const apiURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName+ "&appid="+ apkiKey;
+  axios.get(apiURL).then((res)=> 
+  {console.log("response",res)})
+  .catch((err)=> {
+    console.log("err",err)
+  })
+}
+
+useEffect(()=>{
+  getdetails("Udaipur")
+
+},[])
+
+
   return(
     <div className='col-md-12'>
       <div className='weatherBg'>
