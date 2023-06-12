@@ -6,6 +6,7 @@ import axios from 'axios';
 function App() {
 const apkiKey = "7615e28db9ac3f1486984e9e68c0f670";
 const[data,setData] = useState({});
+const[city,setCity] = useState("");
 
 const getdetails = (cityName)=> {
   if(!cityName) return
@@ -19,6 +20,17 @@ const getdetails = (cityName)=> {
     console.log("err",err)
   })
 }
+const handleChange = (e)=>{
+  setCity(e.target.value)
+
+}
+
+const handlesearch = ()=>{
+  getdetails()
+  
+}
+
+
 
 useEffect(()=>{
   getdetails("Udaipur")
@@ -32,8 +44,8 @@ useEffect(()=>{
         <h1 className='heading'>Weather App</h1>
         
         <div className='d-grid gap-3 col-4 mt-4'>
-        <input type='text' className='form-control'/>
-        <button className='btn btn-primary' type='button'>Search</button>
+        <input type='text' className='form-control' value={city} onChange={handleChange}/>
+        <button className='btn btn-primary' type='button' onClick={handlesearch}>Search</button>
         </div>
         </div>
 
