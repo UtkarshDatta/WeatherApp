@@ -11,7 +11,10 @@ const getdetails = (cityName)=> {
   if(!cityName) return
   const apiURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName+ "&appid="+ apkiKey;
   axios.get(apiURL).then((res)=> 
-  {console.log("response",res)})
+  {console.log("response",res.data)
+  setData(res.data)})
+
+
   .catch((err)=> {
     console.log("err",err)
   })
@@ -39,8 +42,8 @@ useEffect(()=>{
 
             <img className='weathericon'
              src='https://cdn.jim-nielsen.com/ios/512/weather-2021-12-07.png'/>
-             <h5 className='weatherCity'>Udaipur</h5>
-             <h6 className='weatherTemp'>37 °C</h6>
+             <h5 className='weatherCity'>{data?.name}</h5>
+             <h6 className='weatherTemp'>{((data?.main?.temp)-273.15).toFixed(1)}°C</h6>
 
           </div>
         </div>
