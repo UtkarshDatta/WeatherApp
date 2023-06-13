@@ -4,66 +4,64 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function App() {
-const apkiKey = "7615e28db9ac3f1486984e9e68c0f670";
-const[data,setData] = useState({});
-const[city,setCity] = useState("");
+  const apkiKey = "7615e28db9ac3f1486984e9e68c0f670";
+  const [data, setData] = useState({});
+  const [city, setCity] = useState("");
 
-const getdetails = (cityName)=> {
-  if(!cityName) return
-  const apiURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName+ "&appid="+ apkiKey;
-  axios.get(apiURL).then((res)=> 
-  {console.log("response",res.data)
-  setData(res.data)})
+  const getdetails = (cityName) => {
+    if (!cityName) return
+    const apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apkiKey;
+    axios.get(apiURL).then((res) => { setData(res.data) })
 
 
-  .catch((err)=> {
-    console.log("err",err)
-  })
-}
-const handleChange = (e)=>{
-  setCity(e.target.value)
+      .catch((err) => {
+        console.log("err", err)
+      })
+  }
+  const handleChange = (e) => {
+    setCity(e.target.value)
 
-}
+  }
 
-const handlesearch = ()=>{
-  getdetails()
-  
-}
+  const handlesearch = () => {
+    getdetails(city)
+
+  }
 
 
 
-useEffect(()=>{
-  getdetails("Udaipur")
+  useEffect(() => {
+    getdetails("Udaipur")
 
-},[])
+  }, [])
 
 
-  return(
+  return (
     <div className='col-md-12'>
       <div className='weatherBg'>
         <h1 className='heading'>Weather App</h1>
-        
+
         <div className='d-grid gap-3 col-4 mt-4'>
-        <input type='text' className='form-control' value={city} onChange={handleChange}/>
-        <button className='btn btn-primary' type='button' onClick={handlesearch}>Search</button>
+          <input type='text' className='form-control' value={city} onChange={handleChange} />
+          <button className='btn btn-primary' type='button' onClick={handlesearch}>Search</button>
         </div>
+      </div>
+
+      <div className='col-md-12 text-center mt-4'>
+        <div className='shadow rounded weatherResultBox'>
+
+          <img className='weathericon'
+            src='https://cdn.jim-nielsen.com/ios/512/weather-2021-12-07.png' />
+          <h5 className='weatherCity'>{data?.name}</h5>
+          <h6 className='weatherTemp'>{((data?.main?.temp) - 273.15).toFixed(1)}°C</h6>
+
         </div>
-
-        <div className='col-md-12 text-center mt-4'>
-          <div className='shadow rounded weatherResultBox'>
-
-            <img className='weathericon'
-             src='https://cdn.jim-nielsen.com/ios/512/weather-2021-12-07.png'/>
-             <h5 className='weatherCity'>{data?.name}</h5>
-             <h6 className='weatherTemp'>{((data?.main?.temp)-273.15).toFixed(1)}°C</h6>
-
-          </div>
-        </div>
+      </div>
 
     </div>
-    
+
   );
-  
+
 }
 
 export default App;
